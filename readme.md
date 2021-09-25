@@ -1,20 +1,7 @@
-## Routes
+# Bytes
 
-GET:
+### This is a Full Stack Web Application.
 
-/notes - get all notes
+- This application helps users to download, share, and create books in pdf format.
 
-POST:
-
-/notes/new - create new note
-
-
-GET:
-
-/notes/:id/download  - user download pdf book file
-
-GET
-
-/notes/:id - get one book 
-
-
+- This project is currently under development.
