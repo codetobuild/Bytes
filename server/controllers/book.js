@@ -31,8 +31,8 @@ const multerFilter = (req, file, cb) => {
     file.mimetype === "image/jpg" ||
     file.mimetype === "image/png" ||
     file.mimetype === "application/pdf"
-  ) {    
-    cb(null, true); 
+  ) {
+    cb(null, true);
   } else {
     cb(null, false);
     return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
@@ -54,14 +54,12 @@ const upload = multer({
 
 // route handlers
 exports.getAllBooks = async (req, res) => {
-    console.log('get  all obasdfas')
+  console.log("get  all obasdfas");
   const books = await Book.find({});
   res.json({ data: books, error: null });
 };
 
 exports.createBook = async (req, res) => {
- 
-
   upload(req, res, async function (err) {
     // req.file contains information of uploaded file
     // req.body contains information of text fields, if there were any
@@ -75,7 +73,7 @@ exports.createBook = async (req, res) => {
       console.log(err);
       return res.json({ error: err });
     }
-    
+
     const data = { ...req.body };
     const files = { ...req.files };
     console.log(files);
@@ -85,6 +83,7 @@ exports.createBook = async (req, res) => {
       title: data.title,
       category: data.category,
       pageCount: data.pageCount,
+      description: data.description,
       bookCoverImagePath: files.bookCover[0].filename,
       bookFilePath: files.bookFile[0].filename,
     };
@@ -92,9 +91,9 @@ exports.createBook = async (req, res) => {
     const newBook = await Book.create(newBookPayload);
     console.log(newBook);
     res.json({ data: newBook, error: null });
-//     res.send(
-//       `<img src=/images/${newBookPayload.bookCoverImagePath}></img>`
-//     );
+    //     res.send(
+    //       `<img src=/images/${newBookPayload.bookCoverImagePath}></img>`
+    //     );
   });
 };
 
@@ -125,7 +124,7 @@ exports.deleteBook = async (req, res) => {
     `/pdfFiles`,
     `${data.bookFilePath}`
   );
-    console.log(data)
+  console.log(data);
   try {
     await fs.unlinkSync(pathToImageFile);
     await fs.unlinkSync(pathToPdfFile);
@@ -160,7 +159,7 @@ exports.updateBook = async (req, res) => {
     console.log(files);
     try {
       const book = await Book.findById(bookId);
-      console.log("data", book); 
+      console.log("data", book);
 
       book.title = data.title || book.title;
       book.category = data.category || book.category;
